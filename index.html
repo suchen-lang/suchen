@@ -14,10 +14,14 @@
   <body>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
-    <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
     <script type="module">
       if (import.meta.env.VITE_NODE_ENV === 'development') {
-        window.vConsole = new VConsole()
+        const script = document.createElement('script')
+        script.src = 'https://unpkg.com/vconsole@latest/dist/vconsole.min.js'
+        script.onload = function () {
+          window.vConsole = new VConsole()
+        }
+        document.head.appendChild(script)
       }
     </script>
   </body>

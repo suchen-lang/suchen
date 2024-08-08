@@ -2,10 +2,20 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import postcssPxtorem from 'postcss-pxtorem'
 import autoprefixer from 'autoprefixer'
+import { terser } from 'rollup-plugin-terser'
+import compressPlugin from 'vite-plugin-compression'
 import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    compressPlugin({
+      ext: '.gz', // 生成的压缩文件后缀
+      algorithm: 'gzip', // 使用 gzip 压缩
+      deleteOriginFile: false, // 保留原始未压缩文件
+      threshold: 10240 // 只压缩大于此大小的文件（以字节为单位）
+    })
+  ],
   server: {
     host: '0.0.0.0',
     port: 5731,
@@ -34,14 +44,6 @@ export default defineConfig({
   build: {
     target: 'es2015',
     assetsDir: '/',
-    terserOptions: {
-      compress: {
-        keep_infinity: true,
-        // Used to delete console in production environment
-        drop_console: true,
-        drop_debugger: true
-      }
-    },
     rollupOptions: {
       input: {
         index: path.join(__dirname, './index.html')
@@ -50,7 +52,19 @@ export default defineConfig({
       output: {
         chunkFileNames: 'static/js/[name]-[hash].js',
         entryFileNames: 'static/js/[name]-[hash].js',
-        assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
+        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+        manualChunks: {
+          axios: ['axios'],
+          vue: ['vue']
+        },
+        plugins: [
+          terser({
+            compress: {
+              drop_console: true,
+              drop_debugger: true
+            }
+          })
+        ]
       }
     }
   }

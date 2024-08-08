@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "lint": "eslint 'src/*.{vue,ts,js}' && stylelint 'src/*.{vue,css,scss}'",
+    "lint": "eslint \"src/*.{vue,ts,js}\" && stylelint \"src/*.{vue,css,scss}\"",
     "preview": "vite preview",
     "prepare": "husky"
   },
@@ -26,10 +26,12 @@
     "@vitejs/plugin-vue": "^5.0.5",
     "autoprefixer": "^10.4.19",
     "eslint": "^9.8.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-vue": "^9.27.0",
     "husky": "^9.1.4",
     "postcss-pxtorem": "^6.1.0",
     "prettier": "^3.3.3",
+    "rollup-plugin-terser": "^7.0.2",
     "stylelint": "^16.8.1",
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-config-standard": "^36.0.1",
@@ -37,6 +39,7 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",
+    "vite-plugin-compression": "^0.5.1",
     "vue-eslint-parser": "^9.4.3",
     "vue-tsc": "^2.0.24"
   }
