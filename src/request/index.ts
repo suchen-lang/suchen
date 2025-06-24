@@ -16,3 +16,14 @@ export const login = (username: string, password: string) => {
     }
   })
 }
+
+/**
+ * 获取今日案件数量以及总案件数量
+ * @returns 
+*/
+export const getCaseCount = () => {
+  return request({
+    url: '/agent/dispatch/case/statistics',
+    method: 'get'
+  })
+}

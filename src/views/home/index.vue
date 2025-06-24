@@ -38,8 +38,19 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { onMounted } from 'vue';
 import { Divider } from 'vant';
+import { getCaseCount as getCaseCountApi } from '@/request';
+
+const getCaseCount = async () => {
+    const res = await getCaseCountApi();
+    console.log(res);
+}
+
+onMounted(() => {
+    getCaseCount();
+})
 </script>
 
 <style lang="scss" scoped>
