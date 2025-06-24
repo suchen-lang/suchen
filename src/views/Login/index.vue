@@ -30,7 +30,7 @@ const userStore = useUserStore();
 const router = useRouter();
 
 const username = ref('18888888888');
-const password = ref('1234561111');
+const password = ref('123456');
 
 const handleLogin = async () => {
     if (!username.value || !password.value) {
