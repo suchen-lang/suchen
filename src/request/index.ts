@@ -8,11 +8,11 @@ import request from '@/utils/request'
 */
 export const login = (username: string, password: string) => {
   return request({
-    url: '/auth/login',
+    url: '/admin/dispatcher-terminal/login',
     method: 'post',
     data: {
-        username,
-        password
+      username,
+      password
     }
   })
 }

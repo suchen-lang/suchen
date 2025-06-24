@@ -23,20 +23,36 @@
 import { ref } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { closeToast, showLoadingToast, showFailToast } from 'vant';
 
 const store = useStore();
 const router = useRouter();
 
-const username = ref('');
-const password = ref('');
+const username = ref('18888888888');
+const password = ref('123456');
 
 const login = async () => {
-
-
-    const result = await store.dispatch('login', {
-        username: username.value,
-        password: password.value
+    // 判断用户名和密码是否为空
+    if (!username.value || !password.value) {
+        showFailToast('请输入用户名和密码');
+        return;
+    }
+    showLoadingToast({
+        message: '登录中...',
+        duration: 0
     });
+
+
+    try {
+        const result = await store.dispatch('login', {
+            username: username.value,
+            password: password.value
+        });
+    } catch (error) {
+
+    } finally {
+        closeToast();
+    }
 
 
 }

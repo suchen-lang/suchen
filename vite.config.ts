@@ -2,10 +2,9 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import postcssPxtorem from 'postcss-pxtorem'
 import autoprefixer from 'autoprefixer'
-import { terser } from 'rollup-plugin-terser'
+import terser from '@rollup/plugin-terser'
 import compressPlugin from 'vite-plugin-compression'
 import path from 'path'
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),

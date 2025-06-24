@@ -20,7 +20,7 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   (response) => {
     // 请求成功时做一些处理
-    return response
+    return response.data
   },
   (error) => {
     // 请求错误时做一些处理
