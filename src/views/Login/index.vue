@@ -14,47 +14,56 @@
                     <input type="password" placeholder="请输入密码" v-model="password">
                 </li>
             </ul>
-            <button class="login-btn" @click="login">登录</button>
+            <button class="login-btn" @click="handleLogin">登录</button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
-import { closeToast, showLoadingToast, showFailToast } from 'vant';
+import { closeToast, showLoadingToast, showFailToast, showSuccessToast } from 'vant';
+import { useUserStore } from '@/store';
+import { login as loginApi } from '@/request'
 
-const store = useStore();
+const userStore = useUserStore();
 const router = useRouter();
 
 const username = ref('18888888888');
-const password = ref('123456');
+const password = ref('1234561111');
 
-const login = async () => {
-    // 判断用户名和密码是否为空
+const handleLogin = async () => {
     if (!username.value || !password.value) {
         showFailToast('请输入用户名和密码');
         return;
     }
+
     showLoadingToast({
         message: '登录中...',
         duration: 0
     });
 
-
     try {
-        const result = await store.dispatch('login', {
-            username: username.value,
-            password: password.value
-        });
-    } catch (error) {
+        const { code, data, msg } = await loginApi(username.value, password.value);
 
-    } finally {
-        closeToast();
+        if (code === 200) {
+            userStore.setUserInfo(data);
+            userStore.setToken(data.token);
+
+            showSuccessToast({
+                message: '登录成功',
+                duration: 1500,
+                onClose: () => {
+                    router.push('/home');
+                }
+            });
+        } else {
+            showFailToast(msg || '登录失败');
+        }
+    } catch (error: any) {
+        console.error('登录失败:', error);
+        showFailToast(error.response?.data?.message || '网络错误，请重试');
     }
-
-
 }
 </script>
 
