@@ -20,7 +20,13 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5731,
     hmr: true,
-    proxy: {}
+    proxy: {
+      '/api': {
+        target: 'http://47.99.138.212:8082',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
 
   resolve: {
